@@ -262,59 +262,58 @@
 
         <div class="tabs-container">
             <div class="tabs">
-                <button class="tab-button active" onclick="switchTab('movies')">Movies</button>
-                <button class="tab-button" onclick="switchTab('shows')">TV Shows</button>
+                <button class="tab-button active" onclick="switchTab('movies')">Filmes</button>
+                <button class="tab-button" onclick="switchTab('shows')">Séries</button>
             </div>
 
             <div id="movies" class="tab-content active">
-                <input type="text" class="search-bar" placeholder="Search movies..." onkeyup="searchContent('movies', this.value)">
+                <input type="text" class="search-bar" placeholder="Pesquisar..." onkeyup="searchContent('movies', this.value)">
                 
                 <div class="genre-filters">
-                    <span class="genre-tag" onclick="filterGenre('Action')">Action</span>
-                    <span class="genre-tag" onclick="filterGenre('Adventure')">Adventure</span>
-                    <span class="genre-tag" onclick="filterGenre('Fantasy')">Fantasy</span>
+                    <span class="genre-tag" onclick="filterGenre('Action')">Ação</span>
+                    <span class="genre-tag" onclick="filterGenre('Adventure')">Aventura</span>
+                    <span class="genre-tag" onclick="filterGenre('Fantasy')">Fantasia</span>
                     <span class="genre-tag" onclick="filterGenre('Sci-Fi')">Sci-Fi</span>
-                    <span class="genre-tag" onclick="filterGenre('Drama')">Drama</span>
                 </div>
 
                 <div class="content-grid" id="movies-grid">
                     <!-- Piratas e Corsários -->
-                    <div class="content-card" data-title="Piratas e Corsários: O Tesouro Amaldiçoado" data-genre="Adventure" onclick="openMovie('piratas-corsarios.html')">
+                    <div class="content-card" data-title="Piratas e Corsários: O Tesouro Amaldiçoado" data-genre="Aventura" onclick="openMovie('piratas-corsarios.html')">
                         <div class="content-placeholder">⚓</div>
                         <div class="content-info">
                             <div class="content-title">Piratas e Corsários: O Tesouro Amaldiçoado</div>
                             <div class="content-meta">2011 • Adventure</div>
-                            <div class="content-duration">2h 18min</div>
+                            <div class="content-duration">7min</div>
                         </div>
                     </div>
 
                     <!-- Samurai -->
-                    <div class="content-card" data-title="Samurai: O Encontro das Nações" data-genre="Adventure" onclick="openMovie('samurai-encontro.html')">
+                    <div class="content-card" data-title="Samurai: O Encontro das Nações" data-genre="Aventura" onclick="openMovie('samurai-encontro.html')">
                         <div class="content-placeholder">⚔️</div>
                         <div class="content-info">
                             <div class="content-title">Samurai: O Encontro das Nações</div>
                             <div class="content-meta">2013 • Adventure</div>
-                            <div class="content-duration">2h 05min</div>
+                            <div class="content-duration">11min</div>
                         </div>
                     </div>
 
                     <!-- Esquadrão 69 -->
-                    <div class="content-card" data-title="Esquadrão 69" data-genre="Action" onclick="openMovie('esquadrao-69.html')">
+                    <div class="content-card" data-title="Esquadrão 69" data-genre="Ação" onclick="openMovie('esquadrao-69.html')">
                         <div class="content-placeholder">🎬</div>
                         <div class="content-info">
                             <div class="content-title">Esquadrão 69</div>
                             <div class="content-meta">2014 • Action</div>
-                            <div class="content-duration">2h 15min</div>
+                            <div class="content-duration">14min</div>
                         </div>
                     </div>
 
                     <!-- Um Conto de Magia e Fogo -->
-                    <div class="content-card" data-title="Um Conto de Magia e Fogo" data-genre="Fantasy" onclick="openMovie('conto-magia-fogo.html')">
+                    <div class="content-card" data-title="Um Conto de Magia e Fogo" data-genre="Fantasia" onclick="openMovie('conto-magia-fogo.html')">
                         <div class="content-placeholder">🔥</div>
                         <div class="content-info">
                             <div class="content-title">Um Conto de Magia e Fogo</div>
                             <div class="content-meta">2014 • Fantasy</div>
-                            <div class="content-duration">1h 52min</div>
+                            <div class="content-duration">18min</div>
                         </div>
                     </div>
 
@@ -324,21 +323,17 @@
                         <div class="content-info">
                             <div class="content-title">Star Wars: Crisis on Raxus</div>
                             <div class="content-meta">2018 • Sci-Fi</div>
-                            <div class="content-duration">2h 28min</div>
+                            <div class="content-duration">1h 02min</div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div id="shows" class="tab-content">
-                <input type="text" class="search-bar" placeholder="Search TV shows..." onkeyup="searchContent('shows', this.value)">
+                <input type="text" class="search-bar" placeholder="Pesquisar..." onkeyup="searchContent('shows', this.value)">
                 
                 <div class="genre-filters">
                     <span class="genre-tag" onclick="filterGenre('Drama')">Drama</span>
-                    <span class="genre-tag" onclick="filterGenre('Comedy')">Comedy</span>
-                    <span class="genre-tag" onclick="filterGenre('Mystery')">Mystery</span>
-                    <span class="genre-tag" onclick="filterGenre('Documentary')">Documentary</span>
-                    <span class="genre-tag" onclick="filterGenre('Reality')">Reality</span>
                 </div>
 
                 <div class="content-grid" id="shows-grid">
@@ -347,8 +342,8 @@
                         <div class="content-placeholder">📺</div>
                         <div class="content-info">
                             <div class="content-title">Bárrio - As Origens</div>
-                            <div class="content-meta">2016 • Drama • Season 1</div>
-                            <div class="content-duration">8 episodes</div>
+                            <div class="content-meta">2016 • Drama • 1 Temporada</div>
+                            <div class="content-duration">5 episodes</div>
                         </div>
                     </div>
                 </div>
