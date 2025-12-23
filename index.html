@@ -48,7 +48,7 @@
             font-size: 1.1em;
         }
 
-        .tabs-container {
+        .main-container {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
@@ -56,53 +56,56 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
 
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #e0e0e0;
+        .search-bar {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
         }
 
-        .tab-button {
-            background: none;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.1em;
-            cursor: pointer;
+        .search-bar:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        .filter-section {
+            margin-bottom: 25px;
+        }
+
+        .filter-label {
+            font-size: 0.9em;
             color: #666;
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-            margin-bottom: -2px;
-        }
-
-        .tab-button:hover {
-            color: #764ba2;
-        }
-
-        .tab-button.active {
-            color: #764ba2;
-            border-bottom-color: #764ba2;
+            margin-bottom: 10px;
             font-weight: 600;
         }
 
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s ease;
+        .filter-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
-        .tab-content.active {
-            display: block;
+        .filter-tag {
+            padding: 8px 16px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .filter-tag:hover {
+            background: #e0e0e0;
+        }
+
+        .filter-tag.active {
+            background: #764ba2;
+            color: white;
+            border-color: #764ba2;
         }
 
         .content-grid {
@@ -119,11 +122,25 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
+            position: relative;
         }
 
         .content-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(118, 75, 162, 0.9);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            font-weight: 600;
+            z-index: 10;
         }
 
         .content-placeholder {
@@ -134,6 +151,7 @@
             justify-content: center;
             color: white;
             font-size: 3em;
+            padding: 0;
         }
 
         .content-info {
@@ -158,43 +176,6 @@
             font-size: 0.85em;
         }
 
-        .search-bar {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1em;
-            margin-bottom: 20px;
-            transition: border-color 0.3s ease;
-        }
-
-        .search-bar:focus {
-            outline: none;
-            border-color: #764ba2;
-        }
-
-        .genre-filters {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .genre-tag {
-            padding: 8px 16px;
-            background: #f0f0f0;
-            border-radius: 20px;
-            font-size: 0.9em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .genre-tag:hover,
-        .genre-tag.active {
-            background: #764ba2;
-            color: white;
-        }
-
         footer {
             text-align: center;
             margin-top: 40px;
@@ -206,11 +187,6 @@
         @media (max-width: 768px) {
             h1 {
                 font-size: 2em;
-            }
-            
-            .tab-button {
-                padding: 12px 20px;
-                font-size: 1em;
             }
             
             .content-grid {
@@ -237,15 +213,6 @@
                 font-size: 1.5em;
             }
             
-            .tabs {
-                gap: 5px;
-            }
-            
-            .tab-button {
-                padding: 10px 15px;
-                font-size: 0.9em;
-            }
-            
             .content-grid {
                 grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
                 gap: 10px;
@@ -260,127 +227,132 @@
             <p class="tagline">O teu conteúdo favorito da Barrio Productions</p>
         </header>
 
-        <div class="tabs-container">
-            <div class="tabs">
-                <button class="tab-button active" onclick="switchTab('movies')">Filmes</button>
-                <button class="tab-button" onclick="switchTab('shows')">Séries</button>
-            </div>
-
-            <div id="movies" class="tab-content active">
-                <input type="text" class="search-bar" placeholder="Pesquisar..." onkeyup="searchContent('movies', this.value)">
-                
-                <div class="genre-filters">
-                    <span class="genre-tag" onclick="filterGenre('Ação')">Ação</span>
-                    <span class="genre-tag" onclick="filterGenre('Aventura')">Aventura</span>
-                    <span class="genre-tag" onclick="filterGenre('Fantasia')">Fantasia</span>
-                    <span class="genre-tag" onclick="filterGenre('Sci-Fi')">Sci-Fi</span>
-                </div>
-
-                <div class="content-grid" id="movies-grid">
-                    <!-- Piratas e Corsários -->
-                    <div class="content-card" data-title="Piratas e Corsários: O Tesouro Amaldiçoado" data-genre="Aventura" onclick="openMovie('piratas-corsarios.html')">
-                        <div class="content-placeholder" style="padding: 0;">
-                            <img src="piratas/capa_piratas_ai.png" alt="Piratas" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="content-info">
-                            <div class="content-title">Piratas e Corsários: O Tesouro Amaldiçoado</div>
-                            <div class="content-meta">2011 • Aventura</div>
-                            <div class="content-duration">7min</div>
-                        </div>
-                    </div>
-
-                    <!-- Medieval: Vitória a Todo o Custo -->
-                    <div class="content-card" data-title="Medieval: Vitória a Todo o Custo" data-genre="Ação" onclick="openMovie('medieval-vitoria.html')">
-                        <div class="content-placeholder" style="padding: 0;">
-                            <img src="medieval/capa_medieval_ai.png" alt="Medieval" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="content-info">
-                            <div class="content-title">Medieval: Vitória a Todo o Custo</div>
-                            <div class="content-meta">2012 • Ação</div>
-                            <div class="content-duration">4min</div>
-                        </div>
-                    </div>
-
-                    <!-- Em Busca de Novas Glórias - NEW MOVIE -->
-                    <div class="content-card" data-title="Em Busca de Novas Glórias" data-genre="Aventura" onclick="openMovie('busca-novas-glorias.html')">
-                        <div class="content-placeholder" style="padding: 0;">
-                            <img src="busca/capa_busca_ai.png" alt="Busca" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="content-info">
-                            <div class="content-title">Em Busca de Novas Glórias</div>
-                            <div class="content-meta">2013 • Aventura</div>
-                            <div class="content-duration">12min</div>
-                        </div>
-                    </div>
-
-                    <!-- Samurai -->
-                    <div class="content-card" data-title="Samurai: O Encontro das Nações" data-genre="Aventura" onclick="openMovie('samurai-encontro.html')">
-                        <div class="content-placeholder" style="padding: 0;">
-                            <img src="samurai/capa_samurai_ai.png" alt="Samurai" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="content-info">
-                            <div class="content-title">Samurai: O Encontro das Nações</div>
-                            <div class="content-meta">2013 • Aventura</div>
-                            <div class="content-duration">11min</div>
-                        </div>
-                    </div>
-
-                    <!-- Esquadrão 69 -->
-                    <div class="content-card" data-title="Esquadrão 69" data-genre="Ação" onclick="openMovie('esquadrao-69.html')">
-                        <div class="content-placeholder" style="padding: 0;">
-                            <img src="esquadrao/capa_esquadrao_ai.png" alt="Esquadrão" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="content-info">
-                            <div class="content-title">Esquadrão 69</div>
-                            <div class="content-meta">2014 • Ação</div>
-                            <div class="content-duration">14min</div>
-                        </div>
-                    </div>
-
-                    <!-- Um Conto de Magia e Fogo -->
-                    <div class="content-card" data-title="Um Conto de Magia e Fogo" data-genre="Fantasia" onclick="openMovie('conto-magia-fogo.html')">
-                        <div class="content-placeholder" style="padding: 0;">
-                            <img src="conto/capa_conto_ai.png" alt="Conto" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="content-info">
-                            <div class="content-title">Um Conto de Magia e Fogo</div>
-                            <div class="content-meta">2014 • Fantasia</div>
-                            <div class="content-duration">18min</div>
-                        </div>
-                    </div>
-
-                    <!-- Star Wars: Crisis on Raxus -->
-                    <div class="content-card" data-title="Star Wars: Crisis on Raxus" data-genre="Sci-Fi" onclick="openMovie('star-wars-raxus.html')">
-                        <div class="content-placeholder" style="padding: 0;">
-                            <img src="crisis/capa_crisis_ai.png" alt="Crisis" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="content-info">
-                            <div class="content-title">Star Wars: Crisis on Raxus</div>
-                            <div class="content-meta">2018 • Sci-Fi</div>
-                            <div class="content-duration">1h 02min</div>
-                        </div>
-                    </div>
+        <div class="main-container">
+            <input type="text" class="search-bar" placeholder="Pesquisar..." onkeyup="searchContent(this.value)">
+            
+            <div class="filter-section">
+                <div class="filter-label">Tipo:</div>
+                <div class="filter-tags">
+                    <span class="filter-tag" onclick="filterType('all')">Todos</span>
+                    <span class="filter-tag" onclick="filterType('Filme')">Filmes</span>
+                    <span class="filter-tag" onclick="filterType('Série')">Séries</span>
                 </div>
             </div>
 
-            <div id="shows" class="tab-content">
-                <input type="text" class="search-bar" placeholder="Pesquisar..." onkeyup="searchContent('shows', this.value)">
-                
-                <div class="genre-filters">
-                    <span class="genre-tag" onclick="filterGenre('Drama')">Drama</span>
+            <div class="filter-section">
+                <div class="filter-label">Gênero:</div>
+                <div class="filter-tags">
+                    <span class="filter-tag" onclick="filterGenre('all')">Todos</span>
+                    <span class="filter-tag" onclick="filterGenre('Ação')">Ação</span>
+                    <span class="filter-tag" onclick="filterGenre('Aventura')">Aventura</span>
+                    <span class="filter-tag" onclick="filterGenre('Drama')">Drama</span>
+                    <span class="filter-tag" onclick="filterGenre('Fantasia')">Fantasia</span>
+                    <span class="filter-tag" onclick="filterGenre('Sci-Fi')">Sci-Fi</span>
+                </div>
+            </div>
+
+            <div class="content-grid" id="content-grid">
+                <!-- Piratas e Corsários -->
+                <div class="content-card" data-title="Piratas e Corsários: O Tesouro Amaldiçoado" data-type="Filme" data-genre="Aventura" onclick="openContent('piratas-corsarios.html')">
+                    <span class="content-badge">Filme</span>
+                    <div class="content-placeholder" style="padding: 0;">
+                        <img src="piratas/capa_piratas_ai.png" alt="Piratas" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="content-info">
+                        <div class="content-title">Piratas e Corsários: O Tesouro Amaldiçoado</div>
+                        <div class="content-meta">2011 • Aventura</div>
+                        <div class="content-duration">7min</div>
+                    </div>
                 </div>
 
-                <div class="content-grid" id="shows-grid">
-                    <!-- Bárrio - As Origens -->
-                    <div class="content-card" data-title="Bárrio - As Origens" data-genre="Drama" onclick="openShow('barrio-as-origens.html')">
-                        <div class="content-placeholder" style="padding: 0;">
-                            <img src="origens/capa_origens_ai.png" alt="Origens" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="content-info">
-                            <div class="content-title">Bárrio - As Origens</div>
-                            <div class="content-meta">2016 • Drama</div>
-                            <div class="content-duration">5 episódios</div>
-                        </div>
+                <!-- Medieval: Vitória a Todo o Custo -->
+                <div class="content-card" data-title="Medieval: Vitória a Todo o Custo" data-type="Filme" data-genre="Ação" onclick="openContent('medieval-vitoria.html')">
+                    <span class="content-badge">Filme</span>
+                    <div class="content-placeholder" style="padding: 0;">
+                        <img src="medieval/capa_medieval_ai.png" alt="Medieval" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="content-info">
+                        <div class="content-title">Medieval: Vitória a Todo o Custo</div>
+                        <div class="content-meta">2012 • Ação</div>
+                        <div class="content-duration">4min</div>
+                    </div>
+                </div>
+
+                <!-- Em Busca de Novas Glórias -->
+                <div class="content-card" data-title="Em Busca de Novas Glórias" data-type="Filme" data-genre="Aventura" onclick="openContent('busca-novas-glorias.html')">
+                    <span class="content-badge">Filme</span>
+                    <div class="content-placeholder" style="padding: 0;">
+                        <img src="busca/capa_busca_ai.png" alt="Busca" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="content-info">
+                        <div class="content-title">Em Busca de Novas Glórias</div>
+                        <div class="content-meta">2013 • Aventura</div>
+                        <div class="content-duration">12min</div>
+                    </div>
+                </div>
+
+                <!-- Samurai -->
+                <div class="content-card" data-title="Samurai: O Encontro das Nações" data-type="Filme" data-genre="Aventura" onclick="openContent('samurai-encontro.html')">
+                    <span class="content-badge">Filme</span>
+                    <div class="content-placeholder" style="padding: 0;">
+                        <img src="samurai/capa_samurai_ai.png" alt="Samurai" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="content-info">
+                        <div class="content-title">Samurai: O Encontro das Nações</div>
+                        <div class="content-meta">2013 • Aventura</div>
+                        <div class="content-duration">11min</div>
+                    </div>
+                </div>
+
+                <!-- Esquadrão 69 -->
+                <div class="content-card" data-title="Esquadrão 69" data-type="Filme" data-genre="Ação" onclick="openContent('esquadrao-69.html')">
+                    <span class="content-badge">Filme</span>
+                    <div class="content-placeholder" style="padding: 0;">
+                        <img src="esquadrao/capa_esquadrao_ai.png" alt="Esquadrão" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="content-info">
+                        <div class="content-title">Esquadrão 69</div>
+                        <div class="content-meta">2014 • Ação</div>
+                        <div class="content-duration">14min</div>
+                    </div>
+                </div>
+
+                <!-- Um Conto de Magia e Fogo -->
+                <div class="content-card" data-title="Um Conto de Magia e Fogo" data-type="Filme" data-genre="Fantasia" onclick="openContent('conto-magia-fogo.html')">
+                    <span class="content-badge">Filme</span>
+                    <div class="content-placeholder" style="padding: 0;">
+                        <img src="conto/capa_conto_ai.png" alt="Conto" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="content-info">
+                        <div class="content-title">Um Conto de Magia e Fogo</div>
+                        <div class="content-meta">2014 • Fantasia</div>
+                        <div class="content-duration">18min</div>
+                    </div>
+                </div>
+
+                <!-- Bárrio - As Origens -->
+                <div class="content-card" data-title="Bárrio - As Origens" data-type="Série" data-genre="Drama" onclick="openContent('barrio-as-origens.html')">
+                    <span class="content-badge">Série</span>
+                    <div class="content-placeholder" style="padding: 0;">
+                        <img src="origens/capa_origens_ai.png" alt="Origens" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="content-info">
+                        <div class="content-title">Bárrio - As Origens</div>
+                        <div class="content-meta">2016 • Drama</div>
+                        <div class="content-duration">5 episódios</div>
+                    </div>
+                </div>
+
+                <!-- Star Wars: Crisis on Raxus -->
+                <div class="content-card" data-title="Star Wars: Crisis on Raxus" data-type="Filme" data-genre="Sci-Fi" onclick="openContent('star-wars-raxus.html')">
+                    <span class="content-badge">Filme</span>
+                    <div class="content-placeholder" style="padding: 0;">
+                        <img src="crisis/capa_crisis_ai.png" alt="Crisis" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="content-info">
+                        <div class="content-title">Star Wars: Crisis on Raxus</div>
+                        <div class="content-meta">2018 • Sci-Fi</div>
+                        <div class="content-duration">1h 02min</div>
                     </div>
                 </div>
             </div>
@@ -392,38 +364,20 @@
     </div>
 
     <script>
-        function switchTab(tabName) {
-            // Hide all tab contents
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(tab => {
-                tab.classList.remove('active');
-            });
+        // Initialize filters
+        let activeType = 'all';
+        let activeGenre = 'all';
 
-            // Remove active class from all tab buttons
-            const tabButtons = document.querySelectorAll('.tab-button');
-            tabButtons.forEach(button => {
-                button.classList.remove('active');
-            });
-
-            // Show selected tab content
-            document.getElementById(tabName).classList.add('active');
-
-            // Add active class to clicked button
-            event.target.classList.add('active');
-
-            // Reset filters
-            document.querySelectorAll('.genre-tag').forEach(tag => {
-                tag.classList.remove('active');
-            });
-        }
-
-        function searchContent(section, searchTerm) {
-            const grid = document.getElementById(section + '-grid');
-            const cards = grid.querySelectorAll('.content-card');
+        function searchContent(searchTerm) {
+            const cards = document.querySelectorAll('.content-card');
             
             cards.forEach(card => {
                 const title = card.getAttribute('data-title').toLowerCase();
-                if (title.includes(searchTerm.toLowerCase())) {
+                const matchesSearch = title.includes(searchTerm.toLowerCase());
+                const matchesType = activeType === 'all' || card.getAttribute('data-type') === activeType;
+                const matchesGenre = activeGenre === 'all' || card.getAttribute('data-genre') === activeGenre;
+                
+                if (matchesSearch && matchesType && matchesGenre) {
                     card.style.display = 'block';
                 } else {
                     card.style.display = 'none';
@@ -431,46 +385,57 @@
             });
         }
 
+        function filterType(type) {
+            activeType = type;
+            
+            // Update active state
+            document.querySelectorAll('.filter-section:first-of-type .filter-tag').forEach(tag => {
+                tag.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            applyFilters();
+        }
+
         function filterGenre(genre) {
-            // Toggle active state
-            event.target.classList.toggle('active');
+            activeGenre = genre;
             
-            // Get active tab
-            const activeTab = document.querySelector('.tab-content.active');
-            const grid = activeTab.querySelector('.content-grid');
-            const cards = grid.querySelectorAll('.content-card');
+            // Update active state
+            document.querySelectorAll('.filter-section:last-of-type .filter-tag').forEach(tag => {
+                tag.classList.remove('active');
+            });
+            event.target.classList.add('active');
             
-            // Get all active genres
-            const activeGenres = Array.from(activeTab.querySelectorAll('.genre-tag.active'))
-                .map(tag => tag.textContent);
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const cards = document.querySelectorAll('.content-card');
+            const searchTerm = document.querySelector('.search-bar').value.toLowerCase();
             
-            if (activeGenres.length === 0) {
-                // Show all if no filters active
-                cards.forEach(card => {
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title').toLowerCase();
+                const matchesSearch = searchTerm === '' || title.includes(searchTerm);
+                const matchesType = activeType === 'all' || card.getAttribute('data-type') === activeType;
+                const matchesGenre = activeGenre === 'all' || card.getAttribute('data-genre') === activeGenre;
+                
+                if (matchesSearch && matchesType && matchesGenre) {
                     card.style.display = 'block';
-                });
-            } else {
-                // Filter by active genres
-                cards.forEach(card => {
-                    const cardGenre = card.getAttribute('data-genre');
-                    if (activeGenres.includes(cardGenre)) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            }
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         }
 
-        // Function to open movie page
-        function openMovie(url) {
+        function openContent(url) {
             window.location.href = url;
         }
 
-        // Function to open TV show page
-        function openShow(url) {
-            window.location.href = url;
-        }
+        // Set default active filters on load
+        window.addEventListener('load', function() {
+            document.querySelector('.filter-section:first-of-type .filter-tag:first-child').classList.add('active');
+            document.querySelector('.filter-section:last-of-type .filter-tag:first-child').classList.add('active');
+        });
     </script>
 </body>
 </html>
