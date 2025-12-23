@@ -122,11 +122,26 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
+            position: relative;
         }
 
         .content-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(118, 75, 162, 0.9);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: 600;
+            z-index: 10;
+            transform: translateY(-115px);
         }
 
         .content-placeholder {
@@ -138,20 +153,6 @@
             color: white;
             font-size: 3em;
             padding: 0;
-            position: relative;
-        }
-
-        .content-badge {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(118, 75, 162, 0.9);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.75em;
-            font-weight: 600;
-            z-index: 10;
         }
 
         .content-info {
@@ -236,18 +237,6 @@
                     <span class="filter-tag" onclick="filterType('all')">Todos</span>
                     <span class="filter-tag" onclick="filterType('Filme')">Filmes</span>
                     <span class="filter-tag" onclick="filterType('Série')">Séries</span>
-                </div>
-            </div>
-
-            <div class="filter-section">
-                <div class="filter-label">Gênero:</div>
-                <div class="filter-tags">
-                    <span class="filter-tag" onclick="filterGenre('all')">Todos</span>
-                    <span class="filter-tag" onclick="filterGenre('Ação')">Ação</span>
-                    <span class="filter-tag" onclick="filterGenre('Aventura')">Aventura</span>
-                    <span class="filter-tag" onclick="filterGenre('Drama')">Drama</span>
-                    <span class="filter-tag" onclick="filterGenre('Fantasia')">Fantasia</span>
-                    <span class="filter-tag" onclick="filterGenre('Sci-Fi')">Sci-Fi</span>
                 </div>
             </div>
 
@@ -366,7 +355,6 @@
     <script>
         // Initialize filters
         let activeType = 'all';
-        let activeGenre = 'all';
 
         function searchContent(searchTerm) {
             const cards = document.querySelectorAll('.content-card');
@@ -375,9 +363,8 @@
                 const title = card.getAttribute('data-title').toLowerCase();
                 const matchesSearch = title.includes(searchTerm.toLowerCase());
                 const matchesType = activeType === 'all' || card.getAttribute('data-type') === activeType;
-                const matchesGenre = activeGenre === 'all' || card.getAttribute('data-genre') === activeGenre;
                 
-                if (matchesSearch && matchesType && matchesGenre) {
+                if (matchesSearch && matchesType) {
                     card.style.display = 'block';
                 } else {
                     card.style.display = 'none';
@@ -388,20 +375,9 @@
         function filterType(type) {
             activeType = type;
             
-            // Update active state
-            document.querySelectorAll('.filter-section:first-of-type .filter-tag').forEach(tag => {
-                tag.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            applyFilters();
-        }
-
-        function filterGenre(genre) {
-            activeGenre = genre;
-            
-            // Update active state
-            document.querySelectorAll('.filter-section:last-of-type .filter-tag').forEach(tag => {
+            // Update active state - clear all then set the clicked one
+            const typeSection = document.querySelectorAll('.filter-section')[0];
+            typeSection.querySelectorAll('.filter-tag').forEach(tag => {
                 tag.classList.remove('active');
             });
             event.target.classList.add('active');
@@ -417,9 +393,8 @@
                 const title = card.getAttribute('data-title').toLowerCase();
                 const matchesSearch = searchTerm === '' || title.includes(searchTerm);
                 const matchesType = activeType === 'all' || card.getAttribute('data-type') === activeType;
-                const matchesGenre = activeGenre === 'all' || card.getAttribute('data-genre') === activeGenre;
                 
-                if (matchesSearch && matchesType && matchesGenre) {
+                if (matchesSearch && matchesType) {
                     card.style.display = 'block';
                 } else {
                     card.style.display = 'none';
@@ -434,7 +409,6 @@
         // Set default active filters on load
         window.addEventListener('load', function() {
             document.querySelector('.filter-section:first-of-type .filter-tag:first-child').classList.add('active');
-            document.querySelector('.filter-section:last-of-type .filter-tag:first-child').classList.add('active');
         });
     </script>
 </body>
