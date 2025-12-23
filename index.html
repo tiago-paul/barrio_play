@@ -31,16 +31,18 @@
                 </div>
 
                 <div class="content-grid" id="movies-grid">
-                    <!-- Movie cards -->
-                    <div class="content-card" data-title="Action Movie 1" data-genre="Action">
+                    <!-- Esquadrão 69 - Main Feature Film -->
+                    <div class="content-card" data-title="Esquadrão 69" data-genre="Action" onclick="openMovie('esquadrao-69.html')">
                         <div class="content-placeholder">🎬</div>
                         <div class="content-info">
-                            <div class="content-title">Action Movie 1</div>
-                            <div class="content-meta">2024 • Action</div>
+                            <div class="content-title">Esquadrão 69</div>
+                            <div class="content-meta">2014 • Action</div>
                             <div class="rating">★★★★☆</div>
                         </div>
                     </div>
-                    <div class="content-card" data-title="Comedy Special" data-genre="Comedy">
+                    
+                    <!-- Other placeholder movies -->
+                    <div class="content-card" data-title="Comedy Special" data-genre="Comedy" onclick="showComingSoon()">
                         <div class="content-placeholder">🎭</div>
                         <div class="content-info">
                             <div class="content-title">Comedy Special</div>
@@ -48,7 +50,7 @@
                             <div class="rating">★★★★★</div>
                         </div>
                     </div>
-                    <div class="content-card" data-title="Drama Film" data-genre="Drama">
+                    <div class="content-card" data-title="Drama Film" data-genre="Drama" onclick="showComingSoon()">
                         <div class="content-placeholder">🎪</div>
                         <div class="content-info">
                             <div class="content-title">Drama Film</div>
@@ -56,7 +58,7 @@
                             <div class="rating">★★★★☆</div>
                         </div>
                     </div>
-                    <div class="content-card" data-title="Horror Night" data-genre="Horror">
+                    <div class="content-card" data-title="Horror Night" data-genre="Horror" onclick="showComingSoon()">
                         <div class="content-placeholder">👻</div>
                         <div class="content-info">
                             <div class="content-title">Horror Night</div>
@@ -64,7 +66,7 @@
                             <div class="rating">★★★☆☆</div>
                         </div>
                     </div>
-                    <div class="content-card" data-title="Sci-Fi Adventure" data-genre="Sci-Fi">
+                    <div class="content-card" data-title="Sci-Fi Adventure" data-genre="Sci-Fi" onclick="showComingSoon()">
                         <div class="content-placeholder">🚀</div>
                         <div class="content-info">
                             <div class="content-title">Sci-Fi Adventure</div>
@@ -72,7 +74,7 @@
                             <div class="rating">★★★★★</div>
                         </div>
                     </div>
-                    <div class="content-card" data-title="Family Fun" data-genre="Comedy">
+                    <div class="content-card" data-title="Family Fun" data-genre="Comedy" onclick="showComingSoon()">
                         <div class="content-placeholder">🎨</div>
                         <div class="content-info">
                             <div class="content-title">Family Fun</div>
@@ -96,7 +98,7 @@
 
                 <div class="content-grid" id="shows-grid">
                     <!-- TV Show cards -->
-                    <div class="content-card" data-title="Drama Series" data-genre="Drama">
+                    <div class="content-card" data-title="Drama Series" data-genre="Drama" onclick="showComingSoon()">
                         <div class="content-placeholder">📺</div>
                         <div class="content-info">
                             <div class="content-title">Drama Series</div>
@@ -104,7 +106,7 @@
                             <div class="rating">★★★★★</div>
                         </div>
                     </div>
-                    <div class="content-card" data-title="Comedy Central" data-genre="Comedy">
+                    <div class="content-card" data-title="Comedy Central" data-genre="Comedy" onclick="showComingSoon()">
                         <div class="content-placeholder">😂</div>
                         <div class="content-info">
                             <div class="content-title">Comedy Central</div>
@@ -112,7 +114,7 @@
                             <div class="rating">★★★★☆</div>
                         </div>
                     </div>
-                    <div class="content-card" data-title="Mystery Files" data-genre="Mystery">
+                    <div class="content-card" data-title="Mystery Files" data-genre="Mystery" onclick="showComingSoon()">
                         <div class="content-placeholder">🔍</div>
                         <div class="content-info">
                             <div class="content-title">Mystery Files</div>
@@ -120,7 +122,7 @@
                             <div class="rating">★★★★☆</div>
                         </div>
                     </div>
-                    <div class="content-card" data-title="Nature Docs" data-genre="Documentary">
+                    <div class="content-card" data-title="Nature Docs" data-genre="Documentary" onclick="showComingSoon()">
                         <div class="content-placeholder">🌍</div>
                         <div class="content-info">
                             <div class="content-title">Nature Docs</div>
@@ -128,7 +130,7 @@
                             <div class="rating">★★★★★</div>
                         </div>
                     </div>
-                    <div class="content-card" data-title="Reality Show" data-genre="Reality">
+                    <div class="content-card" data-title="Reality Show" data-genre="Reality" onclick="showComingSoon()">
                         <div class="content-placeholder">🌟</div>
                         <div class="content-info">
                             <div class="content-title">Reality Show</div>
@@ -136,7 +138,7 @@
                             <div class="rating">★★★☆☆</div>
                         </div>
                     </div>
-                    <div class="content-card" data-title="Cooking Masters" data-genre="Reality">
+                    <div class="content-card" data-title="Cooking Masters" data-genre="Reality" onclick="showComingSoon()">
                         <div class="content-placeholder">👨‍🍳</div>
                         <div class="content-info">
                             <div class="content-title">Cooking Masters</div>
@@ -145,6 +147,15 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Coming Soon Modal -->
+        <div id="comingSoonModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
+            <div style="background: white; padding: 30px; border-radius: 15px; text-align: center; max-width: 400px;">
+                <h2 style="color: #764ba2; margin-bottom: 15px;">Coming Soon!</h2>
+                <p style="color: #666; margin-bottom: 20px;">This content will be available soon. Check back later!</p>
+                <button onclick="closeModal()" style="padding: 10px 30px; background: #764ba2; color: white; border: none; border-radius: 25px; cursor: pointer;">OK</button>
             </div>
         </div>
 
@@ -224,13 +235,30 @@
             }
         }
 
-        // Add click handlers to all cards
-        document.querySelectorAll('.content-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const title = this.querySelector('.content-title').textContent;
-                alert('Opening: ' + title);
-            });
-        });
+        // Function to open movie page
+        function openMovie(url) {
+            window.location.href = url;
+        }
+
+        // Function to show coming soon modal
+        function showComingSoon() {
+            const modal = document.getElementById('comingSoonModal');
+            modal.style.display = 'flex';
+        }
+
+        // Function to close modal
+        function closeModal() {
+            const modal = document.getElementById('comingSoonModal');
+            modal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('comingSoonModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
