@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bárrio - As Origens | Barrio Play</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for TV show page */
+        .show-hero {
+            background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.95) 100%),
+                        url('barrio-origens-poster.jpg') center/cover;
+            min-height: 450px;
+            display: flex;
+            align-items: flex-end;
+            padding: 50px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .show-info-header {
+            max-width: 900px;
+        }
+
+        .show-title {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+            font-weight: 700;
+        }
+
+        .show-meta-info {
+            display: flex;
+            gap: 20px;
+            font-size: 1.2em;
+            margin-bottom: 25px;
+            opacity: 0.95;
+        }
+
+        .show-meta-info span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .show-description {
+            font-size: 1.2em;
+            line-height: 1.7;
+            max-width: 800px;
+            opacity: 0.95;
+            margin-bottom: 25px;
+        }
+
+        .show-sections {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+        }
+
+        .section-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 35px;
+            border-bottom: 2px solid #e0e0e0;
+            overflow-x: auto;
+        }
+
+        .section-tab {
+            background: none;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1.05em;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            white-space: nowrap;
+        }
+
+        .section-tab:hover {
+            color: #764ba2;
+        }
+
+        .section-tab.active {
+            color: #764ba2;
+            border-bottom-color: #764ba2;
+            font-weight: 600;
+        }
+
+        .section-content {
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .season-selector {
+            margin-bottom: 25px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .season-selector select {
+            padding: 10px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .season-selector select:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        .episodes-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .episode-card {
+            display: flex;
+            gap: 20px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 15px;
+        }
+
+        .episode-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+        }
+
+        .episode-thumbnail {
+            width: 200px;
+            height: 120px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .episode-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .episode-number {
+            color: #764ba2;
+            font-weight: 600;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .episode-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .episode-description {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .episode-duration {
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            background: #000;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .special-content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .special-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .special-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .special-thumbnail {
+            position: relative;
+            padding-bottom: 56.25%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .special-thumbnail video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .special-info {
+            padding: 20px;
+        }
+
+        .special-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .special-description {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: #764ba2;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #5a3785;
+            transform: translateX(-5px);
+        }
+
+        .play-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 35px;
+            background: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.15em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 15px;
+        }
+
+        .play-button:hover {
+            background: #ff6666;
+            transform: scale(1.05);
+        }
+
+        .secondary-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .secondary-button:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.05);
+        }
+
+        .cast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .cast-card {
+            text-align: center;
+        }
+
+        .cast-photo {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .cast-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .cast-role {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .info-item {
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #764ba2;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .show-hero {
+                padding: 30px 20px;
+            }
+
+            .show-title {
+                font-size: 2.5em;
+            }
+
+            .episode-card {
+                flex-direction: column;
+            }
+
+            .episode-thumbnail {
+                width: 100%;
+                height: 150px;
+            }
+
+            .special-content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">
+            ← Back to Home
+        </a>
+
+        <div class="show-hero">
+            <div class="show-info-header">
+                <h1 class="show-title">Bárrio - As Origens</h1>
+                <div class="show-meta-info">
+                    <span>2016</span>
+                    <span>•</span>
+                    <span>Drama</span>
+                    <span>•</span>
+                    <span>Season 1</span>
+                    <span>•</span>
+                    <span>⭐ 4.8/5</span>
+                </div>
+                <p class="show-description">
+                    A gripping drama that explores the origins of the Bárrio neighborhood, following the intertwined lives of three families as they navigate love, betrayal, and redemption in a community on the brink of transformation.
+                </p>
+                <div>
+                    <button class="play-button" onclick="playEpisode(1)">
+                        ▶ Play S1:E1
+                    </button>
+                    <button class="secondary-button" onclick="switchSection('trailer')">
+                        📽️ Watch Trailer
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="show-sections">
+            <div class="section-tabs">
+                <button class="section-tab active" onclick="switchSection('episodes')">Episodes</button>
+                <button class="section-tab" onclick="switchSection('trailer')">Trailer</button>
+                <button class="section-tab" onclick="switchSection('special')">Special Content</button>
+                <button class="section-tab" onclick="switchSection('cast')">Cast & Crew</button>
+                <button class="section-tab" onclick="switchSection('details')">Details</button>
+            </div>
+
+            <!-- Episodes Section -->
+            <div id="episodes" class="section-content active">
+                <div class="season-selector">
+                    <h2>Season:</h2>
+                    <select onchange="changeSeason(this.value)">
+                        <option value="1">Season 1 (2016)</option>
+                        <option value="2">Season 2 (Coming Soon)</option>
+                    </select>
+                </div>
+
+                <div class="episodes-grid" id="episodes-list">
+                    <!-- Episode 1 -->
+                    <div class="episode-card" onclick="playEpisode(1)">
+                        <div class="episode-thumbnail">📺</div>
+                        <div class="episode-info">
+                            <div class="episode-number">EPISODE 1</div>
+                            <div class="episode-title">O Começo</div>
+                            <div class="episode-description">
+                                Three families arrive at Bárrio, each carrying secrets that will shape the neighborhood's destiny. As they settle in, unexpected connections begin to form.
+                            </div>
+                            <div class="episode-duration">52 min</div>
+                        </div>
+                    </div>
+
+                    <!-- Episode 2 -->
+                    <div class="episode-card" onclick="playEpisode(2)">
+                        <div class="episode-thumbnail">📺</div>
+                        <div class="episode-info">
+                            <div class="episode-number">EPISODE 2</div>
+                            <div class="episode-title">Raízes Profundas</div>
+                            <div class="episode-description">
+                                As the families establish their roots, old rivalries resurface. Maria discovers a shocking truth about her father's past.
+                            </div>
+                            <div class="episode-duration">48 min</div>
+                        </div>
+                    </div>
+
+                    <!-- Episode 3 -->
+                    <div class="episode-card" onclick="playEpisode(3)">
+                        <div class="episode-thumbnail">📺</div>
+                        <div class="episode-info">
+                            <div class="episode-number">EPISODE 3</div>
+                            <div class="episode-title">Segredos Enterrados</div>
+                            <div class="episode-description">
+                                A construction project unearths more than just soil, revealing buried secrets that threaten to tear the community apart.
+                            </div>
+                            <div class="episode-duration">51 min</div>
+                        </div>
+                    </div>
+
+                    <!-- Episode 4 -->
+                    <div class="episode-card" onclick="playEpisode(4)">
+                        <div class="episode-thumbnail">📺</div>
+                        <div class="episode-info">
+                            <div class="episode-number">EPISODE 4</div>
+                            <div class="episode-title">Laços de Sangue</div>
+                            <div class="episode-description">
+                                Family loyalties are tested when João must choose between protecting his brother or telling the truth to the authorities.
+                            </div>
+                            <div class="episode-duration">50 min</div>
+                        </div>
+                    </div>
+
+                    <!-- Episode 5 -->
+                    <div class="episode-card" onclick="playEpisode(5)">
+                        <div class="episode-thumbnail">📺</div>
+                        <div class="episode-info">
+                            <div class="episode-number">EPISODE 5</div>
+                            <div class="episode-title">A Tempestade</div>
+                            <div class="episode-description">
+                                A violent storm mirrors the emotional turmoil as long-held secrets come to light during a neighborhood gathering.
+                            </div>
+                            <div class="episode-duration">55 min</div>
+                        </div>
+                    </div>
+
+                    <!-- Episode 6 -->
+                    <div class="episode-card" onclick="playEpisode(6)">
+                        <div class="episode-thumbnail">📺</div>
+                        <div class="episode-info">
+                            <div class="episode-number">EPISODE 6</div>
+                            <div class="episode-title">Encruzilhada</div>
+                            <div class="episode-description">
+                                The neighborhood faces a critical decision that will determine its future. Ana confronts her past to save her family.
+                            </div>
+                            <div class="episode-duration">49 min</div>
+                        </div>
+                    </div>
+
+                    <!-- Episode 7 -->
+                    <div class="episode-card" onclick="playEpisode(7)">
+                        <div class="episode-thumbnail">📺</div>
+                        <div class="episode-info">
+                            <div class="episode-number">EPISODE 7</div>
+                            <div class="episode-title">Redenção</div>
+                            <div class="episode-description">
+                                As old wounds begin to heal, the community must unite against an external threat that endangers everything they've built.
+                            </div>
+                            <div class="episode-duration">53 min</div>
+                        </div>
+                    </div>
+
+                    <!-- Episode 8 - Season Finale -->
+                    <div class="episode-card" onclick="playEpisode(8)">
+                        <div class="episode-thumbnail">🎬</div>
+                        <div class="episode-info">
+                            <div class="episode-number">EPISODE 8 - SEASON FINALE</div>
+                            <div class="episode-title">Novo Amanhecer</div>
+                            <div class="episode-description">
+                                In the season finale, sacrifices are made and alliances forged as Bárrio's residents fight for their home. A shocking revelation sets the stage for season 2.
+                            </div>
+                            <div class="episode-duration">65 min</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trailer Section -->
+            <div id="trailer" class="section-content">
+                <h2>Official Trailer</h2>
+                <div class="video-container">
+                    <video controls poster="barrio-origens-trailer-poster.jpg">
+                        <source src="barrio-origens-trailer.mp4" type="video/mp4">
+                        <!-- Add your trailer file here -->
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <p style="color: #666; margin-top: 10px;">
+                    Note: Replace "barrio-origens-trailer.mp4" with your actual trailer file path.
+                </p>
+            </div>
+
+            <!-- Special Content Section -->
+            <div id="special" class="section-content">
+                <h2>Special Content</h2>
+                <div class="special-content-grid">
+                    <!-- Behind the Scenes -->
+                    <div class="special-card">
+                        <div class="special-thumbnail">
+                            <video controls>
+                                <source src="barrio-origens-behind-scenes.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="special-info">
+                            <div class="special-title">Behind the Scenes</div>
+                            <div class="special-description">
+                                Go behind the camera and discover how the world of Bárrio was brought to life. Features interviews with cast and crew.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cast Interviews -->
+                    <div class="special-card">
+                        <div class="special-thumbnail">
+                            <video controls>
+                                <source src="barrio-origens-interviews.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="special-info">
+                            <div class="special-title">Cast Interviews</div>
+                            <div class="special-description">
+                                The main cast shares their experiences filming the first season and their thoughts on their characters' journeys.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- The Origins Mini-Documentary -->
+                    <div class="special-card">
+                        <div class="special-thumbnail">
+                            <video controls>
+                                <source src="barrio-origens-mini-doc.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="special-info">
+                            <div class="special-title">The Origins: Mini-Documentary</div>
+                            <div class="special-description">
+                                A 30-minute documentary exploring the real stories that inspired the series and the cultural significance of neighborhood communities.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Deleted Scenes -->
+                    <div class="special-card">
+                        <div class="special-thumbnail">
+                            <video controls>
+                                <source src="barrio-origens-deleted.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="special-info">
+                            <div class="special-title">Deleted Scenes</div>
+                            <div class="special-description">
+                                Scenes that didn't make the final cut but provide additional context and character development.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p style="color: #666; margin-top: 20px;">
+                    Note: Add your special content video files in the src attributes above.
+                </p>
+            </div>
+
+            <!-- Cast Section -->
+            <div id="cast" class="section-content">
+                <h2>Cast & Crew</h2>
+                <div class="cast-grid">
+                    <div class="cast-card">
+                        <div class="cast-photo">👤</div>
+                        <div class="cast-name">Carlos Mendes</div>
+                        <div class="cast-role">Creator/Director</div>
+                    </div>
+                    <div class="cast-card">
+                        <div class="cast-photo">👤</div>
+                        <div class="cast-name">Ana Silva</div>
+                        <div class="cast-role">Maria Santos</div>
+                    </div>
+                    <div class="cast-card">
+                        <div class="cast-photo">👤</div>
+                        <div class="cast-name">João Pedro</div>
+                        <div class="cast-role">Carlos Oliveira</div>
+                    </div>
+                    <div class="cast-card">
+                        <div class="cast-photo">👤</div>
+                        <div class="cast-name">Lucia Ferreira</div>
+                        <div class="cast-role">Ana Rodrigues</div>
+                    </div>
+                    <div class="cast-card">
+                        <div class="cast-photo">👤</div>
+                        <div class="cast-name">Roberto Costa</div>
+                        <div class="cast-role">João Pereira</div>
+                    </div>
+                    <div class="cast-card">
+                        <div class="cast-photo">👤</div>
+                        <div class="cast-name">Marina Santos</div>
+                        <div class="cast-role">Executive Producer</div>
+                    </div>
+                    <div class="cast-card">
+                        <div class="cast-photo">👤</div>
+                        <div class="cast-name">Paulo Almeida</div>
+                        <div class="cast-role">Writer</div>
+                    </div>
+                    <div class="cast-card">
+                        <div class="cast-photo">👤</div>
+                        <div class="cast-name">Teresa Lima</div>
+                        <div class="cast-role">Cinematographer</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Details Section -->
+            <div id="details" class="section-content">
+                <h2>Series Details</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">First Aired</div>
+                        <div class="info-value">March 15, 2016</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Network</div>
+                        <div class="info-value">Barrio Play Original</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Seasons</div>
+                        <div class="info-value">1 (Season 2 in production)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Episodes</div>
+                        <div class="info-value">8 (Season 1)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Genre</div>
+                        <div class="info-value">Drama, Family, Mystery</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Language</div>
+                        <div class="info-value">Portuguese</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Country</div>
+                        <div class="info-value">Brazil</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Rating</div>
+                        <div class="info-value">TV-14</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Awards</div>
+                        <div class="info-value">Best Drama Series 2016</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Format</div>
+                        <div class="info-value">1080p HD</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Audio</div>
+                        <div class="info-value">5.1 Surround Sound</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Subtitles</div>
+                        <div class="info-value">English, Spanish, French</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Episode Player Modal -->
+        <div id="episodeModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; padding: 20px;">
+            <div style="max-width: 1200px; margin: 0 auto; height: 100%; display: flex; flex-direction: column;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 id="episodeTitle" style="color: white;"></h2>
+                    <button onclick="closeEpisodeModal()" style="background: #764ba2; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer;">✕ Close</button>
+                </div>
+                <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
+                    <video id="episodePlayer" controls style="width: 100%; max-height: 100%; border-radius: 12px;">
+                        <source src="" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Barrio Play. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        function switchSection(sectionName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.section-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionName).classList.add('active');
+
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function changeSeason(season) {
+            if (season === '2') {
+                const episodesList = document.getElementById('episodes-list');
+                episodesList.innerHTML = '<div style="text-align: center; padding: 50px; color: #666;"><h3>Season 2 Coming Soon!</h3><p>New episodes are currently in production.</p></div>';
+            } else {
+                location.reload(); // Reload to show Season 1 episodes
+            }
+        }
+
+        function playEpisode(episodeNumber) {
+            const modal = document.getElementById('episodeModal');
+            const player = document.getElementById('episodePlayer');
+            const title = document.getElementById('episodeTitle');
+            
+            // Episode titles
+            const episodeTitles = {
+                1: 'Episode 1: O Começo',
+                2: 'Episode 2: Raízes Profundas',
+                3: 'Episode 3: Segredos Enterrados',
+                4: 'Episode 4: Laços de Sangue',
+                5: 'Episode 5: A Tempestade',
+                6: 'Episode 6: Encruzilhada',
+                7: 'Episode 7: Redenção',
+                8: 'Episode 8: Novo Amanhecer'
+            };
+            
+            title.textContent = episodeTitles[episodeNumber];
+            player.querySelector('source').src = `barrio-origens-s01e${String(episodeNumber).padStart(2, '0')}.mp4`;
+            player.load();
+            
+            modal.style.display = 'block';
+            player.play();
+        }
+
+        function closeEpisodeModal() {
+            const modal = document.getElementById('episodeModal');
+            const player = document.getElementById('episodePlayer');
+            
+            player.pause();
+            modal.style.display = 'none';
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeEpisodeModal();
+            }
+        });
+    </script>
+</body>
+</html>
