@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="content-grid" id="movies-grid">
-                    <!-- Esquadrão 69 - Main Feature Film -->
+                    <!-- Esquadrão 69 - Available Movie -->
                     <div class="content-card" data-title="Esquadrão 69" data-genre="Action" onclick="openMovie('esquadrao-69.html')">
                         <div class="content-placeholder">🎬</div>
                         <div class="content-info">
@@ -40,11 +40,9 @@
                             <div class="rating">★★★★☆</div>
                         </div>
                     </div>
-                    
+                </div>
+            </div>
 
-
-
-                    
             <div id="shows" class="tab-content">
                 <input type="text" class="search-bar" placeholder="Search TV shows..." onkeyup="searchContent('shows', this.value)">
                 
@@ -57,62 +55,18 @@
                 </div>
 
                 <div class="content-grid" id="shows-grid">
-                    <!-- TV Show cards -->
-                    <div class="content-card" data-title="Drama Series" data-genre="Drama" onclick="showComingSoon()">
+                    <!-- Bárrio - As Origens - Available TV Show -->
+                    <div class="content-card" data-title="Bárrio - As Origens" data-genre="Drama" onclick="openShow('barrio-as-origens.html')">
                         <div class="content-placeholder">📺</div>
                         <div class="content-info">
-                            <div class="content-title">Drama Series</div>
-                            <div class="content-meta">Season 3 • Drama</div>
+                            <div class="content-title">Bárrio - As Origens</div>
+                            <div class="content-meta">2016 • Drama • Season 1</div>
                             <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                    <div class="content-card" data-title="Comedy Central" data-genre="Comedy" onclick="showComingSoon()">
-                        <div class="content-placeholder">😂</div>
-                        <div class="content-info">
-                            <div class="content-title">Comedy Central</div>
-                            <div class="content-meta">Season 5 • Comedy</div>
-                            <div class="rating">★★★★☆</div>
-                        </div>
-                    </div>
-                    <div class="content-card" data-title="Mystery Files" data-genre="Mystery" onclick="showComingSoon()">
-                        <div class="content-placeholder">🔍</div>
-                        <div class="content-info">
-                            <div class="content-title">Mystery Files</div>
-                            <div class="content-meta">Season 2 • Mystery</div>
-                            <div class="rating">★★★★☆</div>
-                        </div>
-                    </div>
-                    <div class="content-card" data-title="Nature Docs" data-genre="Documentary" onclick="showComingSoon()">
-                        <div class="content-placeholder">🌍</div>
-                        <div class="content-info">
-                            <div class="content-title">Nature Docs</div>
-                            <div class="content-meta">Season 1 • Documentary</div>
-                            <div class="rating">★★★★★</div>
-                        </div>
-                    </div>
-                    <div class="content-card" data-title="Reality Show" data-genre="Reality" onclick="showComingSoon()">
-                        <div class="content-placeholder">🌟</div>
-                        <div class="content-info">
-                            <div class="content-title">Reality Show</div>
-                            <div class="content-meta">Season 8 • Reality</div>
-                            <div class="rating">★★★☆☆</div>
-                        </div>
-                    </div>
-                    <div class="content-card" data-title="Cooking Masters" data-genre="Reality" onclick="showComingSoon()">
-                        <div class="content-placeholder">👨‍🍳</div>
-                        <div class="content-info">
-                            <div class="content-title">Cooking Masters</div>
-                            <div class="content-meta">Season 4 • Reality</div>
-                            <div class="rating">★★★★☆</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-                
 
         <footer>
             <p>&copy; 2024 Barrio Play. All rights reserved.</p>
@@ -195,24 +149,9 @@
             window.location.href = url;
         }
 
-        // Function to show coming soon modal
-        function showComingSoon() {
-            const modal = document.getElementById('comingSoonModal');
-            modal.style.display = 'flex';
-        }
-
-        // Function to close modal
-        function closeModal() {
-            const modal = document.getElementById('comingSoonModal');
-            modal.style.display = 'none';
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('comingSoonModal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
+        // Function to open TV show page
+        function openShow(url) {
+            window.location.href = url;
         }
     </script>
 </body>
