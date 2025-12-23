@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barrio Play - Your Streaming Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #764ba2;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .tagline {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .tabs-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .tab-button:hover {
+            color: #764ba2;
+        }
+
+        .tab-button.active {
+            color: #764ba2;
+            border-bottom-color: #764ba2;
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+            padding: 20px 0;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-placeholder {
+            height: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3em;
+        }
+
+        .content-info {
+            padding: 15px;
+        }
+
+        .content-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .content-meta {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .rating {
+            color: #ffa500;
+            margin-top: 8px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        .genre-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .genre-tag {
+            padding: 8px 16px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .genre-tag:hover,
+        .genre-tag.active {
+            background: #764ba2;
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Barrio Play</h1>
+            <p class="tagline">Stream Your Favorite Movies & Shows</p>
+        </header>
+
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab-button active" onclick="switchTab('movies')">Movies</button>
+                <button class="tab-button" onclick="switchTab('shows')">TV Shows</button>
+            </div>
+
+            <div id="movies" class="tab-content active">
+                <input type="text" class="search-bar" placeholder="Search movies..." onkeyup="searchContent('movies', this.value)">
+                
+                <div class="genre-filters">
+                    <span class="genre-tag" onclick="filterGenre('Action')">Action</span>
+                    <span class="genre-tag" onclick="filterGenre('Comedy')">Comedy</span>
+                    <span class="genre-tag" onclick="filterGenre('Drama')">Drama</span>
+                    <span class="genre-tag" onclick="filterGenre('Horror')">Horror</span>
+                    <span class="genre-tag" onclick="filterGenre('Sci-Fi')">Sci-Fi</span>
+                </div>
+
+                <div class="content-grid" id="movies-grid">
+                    <!-- Movie cards -->
+                    <div class="content-card" data-title="Action Movie 1" data-genre="Action">
+                        <div class="content-placeholder">🎬</div>
+                        <div class="content-info">
+                            <div class="content-title">Action Movie 1</div>
+                            <div class="content-meta">2024 • Action</div>
+                            <div class="rating">★★★★☆</div>
+                        </div>
+                    </div>
+                    <div class="content-card" data-title="Comedy Special" data-genre="Comedy">
+                        <div class="content-placeholder">🎭</div>
+                        <div class="content-info">
+                            <div class="content-title">Comedy Special</div>
+                            <div class="content-meta">2024 • Comedy</div>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                    <div class="content-card" data-title="Drama Film" data-genre="Drama">
+                        <div class="content-placeholder">🎪</div>
+                        <div class="content-info">
+                            <div class="content-title">Drama Film</div>
+                            <div class="content-meta">2023 • Drama</div>
+                            <div class="rating">★★★★☆</div>
+                        </div>
+                    </div>
+                    <div class="content-card" data-title="Horror Night" data-genre="Horror">
+                        <div class="content-placeholder">👻</div>
+                        <div class="content-info">
+                            <div class="content-title">Horror Night</div>
+                            <div class="content-meta">2024 • Horror</div>
+                            <div class="rating">★★★☆☆</div>
+                        </div>
+                    </div>
+                    <div class="content-card" data-title="Sci-Fi Adventure" data-genre="Sci-Fi">
+                        <div class="content-placeholder">🚀</div>
+                        <div class="content-info">
+                            <div class="content-title">Sci-Fi Adventure</div>
+                            <div class="content-meta">2024 • Sci-Fi</div>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                    <div class="content-card" data-title="Family Fun" data-genre="Comedy">
+                        <div class="content-placeholder">🎨</div>
+                        <div class="content-info">
+                            <div class="content-title">Family Fun</div>
+                            <div class="content-meta">2024 • Family</div>
+                            <div class="rating">★★★★☆</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="shows" class="tab-content">
+                <input type="text" class="search-bar" placeholder="Search TV shows..." onkeyup="searchContent('shows', this.value)">
+                
+                <div class="genre-filters">
+                    <span class="genre-tag" onclick="filterGenre('Drama')">Drama</span>
+                    <span class="genre-tag" onclick="filterGenre('Comedy')">Comedy</span>
+                    <span class="genre-tag" onclick="filterGenre('Mystery')">Mystery</span>
+                    <span class="genre-tag" onclick="filterGenre('Documentary')">Documentary</span>
+                    <span class="genre-tag" onclick="filterGenre('Reality')">Reality</span>
+                </div>
+
+                <div class="content-grid" id="shows-grid">
+                    <!-- TV Show cards -->
+                    <div class="content-card" data-title="Drama Series" data-genre="Drama">
+                        <div class="content-placeholder">📺</div>
+                        <div class="content-info">
+                            <div class="content-title">Drama Series</div>
+                            <div class="content-meta">Season 3 • Drama</div>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                    <div class="content-card" data-title="Comedy Central" data-genre="Comedy">
+                        <div class="content-placeholder">😂</div>
+                        <div class="content-info">
+                            <div class="content-title">Comedy Central</div>
+                            <div class="content-meta">Season 5 • Comedy</div>
+                            <div class="rating">★★★★☆</div>
+                        </div>
+                    </div>
+                    <div class="content-card" data-title="Mystery Files" data-genre="Mystery">
+                        <div class="content-placeholder">🔍</div>
+                        <div class="content-info">
+                            <div class="content-title">Mystery Files</div>
+                            <div class="content-meta">Season 2 • Mystery</div>
+                            <div class="rating">★★★★☆</div>
+                        </div>
+                    </div>
+                    <div class="content-card" data-title="Nature Docs" data-genre="Documentary">
+                        <div class="content-placeholder">🌍</div>
+                        <div class="content-info">
+                            <div class="content-title">Nature Docs</div>
+                            <div class="content-meta">Season 1 • Documentary</div>
+                            <div class="rating">★★★★★</div>
+                        </div>
+                    </div>
+                    <div class="content-card" data-title="Reality Show" data-genre="Reality">
+                        <div class="content-placeholder">🌟</div>
+                        <div class="content-info">
+                            <div class="content-title">Reality Show</div>
+                            <div class="content-meta">Season 8 • Reality</div>
+                            <div class="rating">★★★☆☆</div>
+                        </div>
+                    </div>
+                    <div class="content-card" data-title="Cooking Masters" data-genre="Reality">
+                        <div class="content-placeholder">👨‍🍳</div>
+                        <div class="content-info">
+                            <div class="content-title">Cooking Masters</div>
+                            <div class="content-meta">Season 4 • Reality</div>
+                            <div class="rating">★★★★☆</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Barrio Play. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Remove active class from all tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+
+            // Reset filters
+            document.querySelectorAll('.genre-tag').forEach(tag => {
+                tag.classList.remove('active');
+            });
+        }
+
+        function searchContent(section, searchTerm) {
+            const grid = document.getElementById(section + '-grid');
+            const cards = grid.querySelectorAll('.content-card');
+            
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title').toLowerCase();
+                if (title.includes(searchTerm.toLowerCase())) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function filterGenre(genre) {
+            // Toggle active state
+            event.target.classList.toggle('active');
+            
+            // Get active tab
+            const activeTab = document.querySelector('.tab-content.active');
+            const grid = activeTab.querySelector('.content-grid');
+            const cards = grid.querySelectorAll('.content-card');
+            
+            // Get all active genres
+            const activeGenres = Array.from(activeTab.querySelectorAll('.genre-tag.active'))
+                .map(tag => tag.textContent);
+            
+            if (activeGenres.length === 0) {
+                // Show all if no filters active
+                cards.forEach(card => {
+                    card.style.display = 'block';
+                });
+            } else {
+                // Filter by active genres
+                cards.forEach(card => {
+                    const cardGenre = card.getAttribute('data-genre');
+                    if (activeGenres.includes(cardGenre)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        }
+
+        // Add click handlers to all cards
+        document.querySelectorAll('.content-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const title = this.querySelector('.content-title').textContent;
+                alert('Opening: ' + title);
+            });
+        });
+    </script>
+</body>
+</html>
