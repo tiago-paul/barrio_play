@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>Barrio Play TV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
+            width: 1920px;
+            height: 1080px;
+        }
+        
+        /* Main Container */
+        .tv-app {
+            width: 1920px;
+            height: 1080px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        .tv-header {
+            height: 140px;
+            background: linear-gradient(90deg, rgba(118,75,162,0.9) 0%, rgba(102,126,234,0.9) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 80px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .logo {
+            font-size: 56px;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            letter-spacing: -2px;
+        }
+        
+        .header-info {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            font-size: 24px;
+        }
+        
+        /* Navigation Menu */
+        .tv-nav {
+            background: rgba(0,0,0,0.5);
+            padding: 30px 80px;
+            display: flex;
+            gap: 40px;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+        
+        .nav-button {
+            padding: 20px 50px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, #764ba2, #667eea);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+        
+        .nav-button:focus,
+        .nav-button.active {
+            transform: scale(1.1);
+            border-color: #ff6600;
+            outline: none;
+            box-shadow: 0 0 30px rgba(255,102,0,0.6);
+        }
+        
+        .nav-button:focus:before,
+        .nav-button.active:before {
+            width: 100%;
+        }
+        
+        /* Content Area */
+        .tv-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 40px 80px;
+            scroll-behavior: smooth;
+        }
+        
+        /* Content Rows */
+        .content-section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-size: 42px;
+            margin-bottom: 30px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        .content-slider {
+            display: flex;
+            gap: 35px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 20px 0 40px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .content-slider::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .content-slider::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        
+        .content-slider::-webkit-scrollbar-thumb {
+            background: #764ba2;
+            border-radius: 10px;
+        }
+        
+        /* Movie/Show Cards */
+        .content-card {
+            min-width: 320px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(0,0,0,0.5);
+        }
+        
+        .content-card:focus {
+            transform: scale(1.15) translateY(-20px);
+            outline: none;
+            box-shadow: 0 20px 60px rgba(102,126,234,0.6);
+            z-index: 100;
+        }
+        
+        .content-card:focus .card-info {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .card-poster {
+            width: 320px;
+            height: 480px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            position: relative;
+        }
+        
+        .card-poster::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.9));
+        }
+        
+        .card-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 25px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+            opacity: 0.8;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .card-title {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .card-meta {
+            font-size: 18px;
+            color: #ccc;
+            margin-bottom: 5px;
+        }
+        
+        .card-duration {
+            font-size: 16px;
+            color: #999;
+        }
+        
+        /* Featured Content - Larger Hero Card */
+        .featured-section {
+            margin-bottom: 60px;
+        }
+        
+        .featured-content {
+            height: 500px;
+            background: linear-gradient(135deg, rgba(118,75,162,0.8) 0%, rgba(102,126,234,0.8) 100%);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .featured-content:focus {
+            outline: 4px solid #ff6600;
+            box-shadow: 0 0 60px rgba(255,102,0,0.6);
+        }
+        
+        .featured-poster {
+            width: 350px;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 150px;
+            margin-right: 60px;
+        }
+        
+        .featured-info {
+            flex: 1;
+        }
+        
+        .featured-title {
+            font-size: 64px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .featured-description {
+            font-size: 24px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .featured-meta {
+            font-size: 22px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 40px;
+        }
+        
+        .play-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            padding: 25px 60px;
+            background: #ff4444;
+            border: none;
+            border-radius: 50px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 30px;
+        }
+        
+        .play-button:focus,
+        .play-button:hover {
+            transform: scale(1.1);
+            background: #ff6666;
+            box-shadow: 0 10px 40px rgba(255,68,68,0.5);
+        }
+        
+        .info-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            padding: 25px 50px;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            border-radius: 50px;
+            font-size: 28px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .info-button:focus,
+        .info-button:hover {
+            transform: scale(1.1);
+            background: rgba(255,255,255,0.3);
+            box-shadow: 0 10px 40px rgba(255,255,255,0.2);
+        }
+        
+        /* Loading State */
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            display: none;
+        }
+        
+        /* Focus Ring Animation */
+        @keyframes focusPulse {
+            0% { box-shadow: 0 0 20px rgba(255,102,0,0.6); }
+            50% { box-shadow: 0 0 40px rgba(255,102,0,0.8); }
+            100% { box-shadow: 0 0 20px rgba(255,102,0,0.6); }
+        }
+        
+        .focused {
+            animation: focusPulse 2s infinite;
+        }
+        
+        /* Smooth Transitions */
+        * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Hide scrollbar for Fire TV */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="tv-app">
+        <!-- Header -->
+        <div class="tv-header">
+            <div class="logo">Barrio Play</div>
+            <div class="header-info">
+                <span id="time"></span>
+                <span>👤 Family</span>
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="tv-nav">
+            <button class="nav-button active" data-section="home" tabindex="1">Home</button>
+            <button class="nav-button" data-section="movies" tabindex="2">Movies</button>
+            <button class="nav-button" data-section="shows" tabindex="3">TV Shows</button>
+            <button class="nav-button" data-section="search" tabindex="4">Search</button>
+            <button class="nav-button" data-section="settings" tabindex="5">Settings</button>
+        </div>
+        
+        <!-- Content Area -->
+        <div class="tv-content" id="content">
+            <!-- Featured Content -->
+            <div class="featured-section">
+                <div class="featured-content" tabindex="10">
+                    <div class="featured-poster">🎬</div>
+                    <div class="featured-info">
+                        <h1 class="featured-title">Esquadrão 69</h1>
+                        <p class="featured-description">
+                            An elite tactical unit faces their most dangerous mission yet, navigating through a web of conspiracy and betrayal in the heart of the city's underworld.
+                        </p>
+                        <div class="featured-meta">2014 • Action • 2h 15min</div>
+                        <button class="play-button" tabindex="11" onclick="playContent('esquadrao-69.html')">
+                            ▶ Play Now
+                        </button>
+                        <button class="info-button" tabindex="12" onclick="showInfo('esquadrao-69.html')">
+                            ℹ More Info
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Movies -->
+            <div class="content-section">
+                <h2 class="section-title">Your Movies</h2>
+                <div class="content-slider" id="movies-slider">
+                    <div class="content-card" tabindex="20" onclick="playContent('esquadrao-69.html')">
+                        <div class="card-poster">🎬</div>
+                        <div class="card-info">
+                            <div class="card-title">Esquadrão 69</div>
+                            <div class="card-meta">2014 • Action</div>
+                            <div class="card-duration">2h 15min</div>
+                        </div>
+                    </div>
+                    <div class="content-card" tabindex="21" onclick="playContent('piratas-corsarios.html')">
+                        <div class="card-poster">⚓</div>
+                        <div class="card-info">
+                            <div class="card-title">Piratas e Corsários</div>
+                            <div class="card-meta">2011 • Adventure</div>
+                            <div class="card-duration">2h 18min</div>
+                        </div>
+                    </div>
+                    <div class="content-card" tabindex="22" onclick="playContent('samurai-encontro.html')">
+                        <div class="card-poster">⚔️</div>
+                        <div class="card-info">
+                            <div class="card-title">Samurai: O Encontro</div>
+                            <div class="card-meta">2013 • Adventure</div>
+                            <div class="card-duration">2h 05min</div>
+                        </div>
+                    </div>
+                    <div class="content-card" tabindex="23" onclick="playContent('conto-magia-fogo.html')">
+                        <div class="card-poster">🔥</div>
+                        <div class="card-info">
+                            <div class="card-title">Um Conto de Magia e Fogo</div>
+                            <div class="card-meta">2014 • Fantasy</div>
+                            <div class="card-duration">1h 52min</div>
+                        </div>
+                    </div>
+                    <div class="content-card" tabindex="24" onclick="playContent('star-wars-raxus.html')">
+                        <div class="card-poster">🚀</div>
+                        <div class="card-info">
+                            <div class="card-title">Star Wars: Crisis on Raxus</div>
+                            <div class="card-meta">2018 • Sci-Fi</div>
+                            <div class="card-duration">2h 28min</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TV Shows -->
+            <div class="content-section">
+                <h2 class="section-title">TV Shows</h2>
+                <div class="content-slider" id="shows-slider">
+                    <div class="content-card" tabindex="30" onclick="playContent('barrio-as-origens.html')">
+                        <div class="card-poster">📺</div>
+                        <div class="card-info">
+                            <div class="card-title">Bárrio - As Origens</div>
+                            <div class="card-meta">2016 • Drama • Season 1</div>
+                            <div class="card-duration">8 episodes</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Continue Watching -->
+            <div class="content-section">
+                <h2 class="section-title">Continue Watching</h2>
+                <div class="content-slider" id="continue-slider">
+                    <div class="content-card" tabindex="40">
+                        <div class="card-poster">📺</div>
+                        <div class="card-info">
+                            <div class="card-title">Bárrio - As Origens</div>
+                            <div class="card-meta">S1:E3 - Segredos Enterrados</div>
+                            <div class="card-duration">32 min remaining</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Loading Indicator -->
+        <div class="loading" id="loading">Loading...</div>
+    </div>
+    
+    <script>
+        // Time display
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            document.getElementById('time').textContent = timeString;
+        }
+        updateTime();
+        setInterval(updateTime, 60000);
+        
+        // Fire TV Remote Navigation System
+        let currentFocusIndex = 0;
+        let focusableElements = [];
+        let currentRow = 0;
+        let rowElements = {};
+        
+        // Initialize navigation
+        function initNavigation() {
+            // Group elements by row
+            rowElements = {
+                nav: Array.from(document.querySelectorAll('.nav-button')),
+                featured: Array.from(document.querySelectorAll('.featured-content, .play-button, .info-button')),
+                movies: Array.from(document.querySelectorAll('#movies-slider .content-card')),
+                shows: Array.from(document.querySelectorAll('#shows-slider .content-card')),
+                continue: Array.from(document.querySelectorAll('#continue-slider .content-card'))
+            };
+            
+            // Set initial focus
+            const firstNav = document.querySelector('.nav-button');
+            if (firstNav) firstNav.focus();
+        }
+        
+        // Handle remote control input
+        document.addEventListener('keydown', function(e) {
+            const focused = document.activeElement;
+            let handled = false;
+            
+            switch(e.key) {
+                case 'ArrowRight':
+                    e.preventDefault();
+                    navigateHorizontal(1);
+                    handled = true;
+                    break;
+                    
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    navigateHorizontal(-1);
+                    handled = true;
+                    break;
+                    
+                case 'ArrowDown':
+                    e.preventDefault();
+                    navigateVertical(1);
+                    handled = true;
+                    break;
+                    
+                case 'ArrowUp':
+                    e.preventDefault();
+                    navigateVertical(-1);
+                    handled = true;
+                    break;
+                    
+                case 'Enter':
+                case ' ':
+                case 'OK':
+                    e.preventDefault();
+                    if (focused.onclick) {
+                        focused.click();
+                    }
+                    handled = true;
+                    break;
+                    
+                case 'Escape':
+                case 'Back':
+                case 'Backspace':
+                    e.preventDefault();
+                    navigateBack();
+                    handled = true;
+                    break;
+                    
+                case 'Home':
+                    e.preventDefault();
+                    goHome();
+                    handled = true;
+                    break;
+            }
+            
+            if (handled) {
+                // Scroll focused element into view
+                const focused = document.activeElement;
+                if (focused && focused.scrollIntoView) {
+                    focused.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center',
+                        inline: 'center'
+                    });
+                }
+            }
+        });
+        
+        function navigateHorizontal(direction) {
+            const focused = document.activeElement;
+            const parent = focused.closest('.content-slider, .tv-nav, .featured-info');
+            
+            if (parent) {
+                const siblings = Array.from(parent.querySelectorAll('[tabindex]'));
+                const currentIndex = siblings.indexOf(focused);
+                const nextIndex = currentIndex + direction;
+                
+                if (nextIndex >= 0 && nextIndex < siblings.length) {
+                    siblings[nextIndex].focus();
+                    
+                    // Auto-scroll slider if needed
+                    if (parent.classList.contains('content-slider')) {
+                        siblings[nextIndex].scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'nearest',
+                            inline: 'center'
+                        });
+                    }
+                }
+            }
+        }
+        
+        function navigateVertical(direction) {
+            const rows = ['nav', 'featured', 'movies', 'shows', 'continue'];
+            const focused = document.activeElement;
+            
+            // Find current row
+            let currentRowIndex = -1;
+            for (let i = 0; i < rows.length; i++) {
+                if (rowElements[rows[i]].includes(focused)) {
+                    currentRowIndex = i;
+                    break;
+                }
+            }
+            
+            // Move to next/previous row
+            const nextRowIndex = currentRowIndex + direction;
+            if (nextRowIndex >= 0 && nextRowIndex < rows.length) {
+                const nextRow = rowElements[rows[nextRowIndex]];
+                if (nextRow && nextRow.length > 0) {
+                    // Try to maintain horizontal position
+                    const currentPos = rowElements[rows[currentRowIndex]].indexOf(focused);
+                    const targetIndex = Math.min(currentPos, nextRow.length - 1);
+                    nextRow[Math.max(0, targetIndex)].focus();
+                }
+            }
+        }
+        
+        function navigateBack() {
+            // If in a subsection, go to nav
+            const navButton = document.querySelector('.nav-button.active');
+            if (navButton) navButton.focus();
+        }
+        
+        function goHome() {
+            const homeButton = document.querySelector('[data-section="home"]');
+            if (homeButton) {
+                homeButton.click();
+                homeButton.focus();
+            }
+        }
+        
+        // Navigation button clicks
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active from all
+                document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
+                // Add active to clicked
+                this.classList.add('active');
+                
+                // Here you would load different content based on section
+                const section = this.dataset.section;
+                console.log('Loading section:', section);
+                
+                // Simulate loading
+                showLoading();
+                setTimeout(hideLoading, 500);
+            });
+        });
+        
+        // Content actions
+        function playContent(url) {
+            console.log('Playing:', url);
+            showLoading();
+            // Simulate navigation
+            setTimeout(() => {
+                window.location.href = url;
+            }, 500);
+        }
+        
+        function showInfo(url) {
+            console.log('Showing info for:', url);
+            window.location.href = url;
+        }
+        
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
+        
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+        
+        // Initialize on load
+        window.addEventListener('load', function() {
+            initNavigation();
+            
+            // Focus first nav button
+            const firstButton = document.querySelector('.nav-button');
+            if (firstButton) {
+                firstButton.focus();
+            }
+        });
+        
+        // Smooth scroll for content
+        document.querySelectorAll('.content-slider').forEach(slider => {
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+            
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+            
+            slider.addEventListener('mouseleave', () => {
+                isDown = false;
+            });
+            
+            slider.addEventListener('mouseup', () => {
+                isDown = false;
+            });
+            
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2;
+                slider.scrollLeft = scrollLeft - walk;
+            });
+        });
+    </script>
+</body>
+</html>
