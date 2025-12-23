@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
     <meta name="googlebot" content="noindex, nofollow">
-    <title>Bárrio - As Origens | Barrio Play</title>
+    <title>Bárrio: As Origens | Barrio Play</title>
     <link rel="stylesheet" href="style.css">
     <style>
         /* Additional styles for TV show page */
@@ -417,7 +417,7 @@
 
         <div class="show-hero">
             <div class="show-info-header">
-                <h1 class="show-title">Bárrio - As Origens</h1>
+                <h1 class="show-title">Bárrio: As Origens</h1>
                 <div class="show-meta-info">
                     <span>2016</span>
                     <span>•</span>
@@ -426,14 +426,14 @@
                     <span>1 Temporada</span>
                 </div>
                 <p class="show-description">
-                    A gripping drama that explores the origins of the Bárrio neighborhood, following the intertwined lives of three families as they navigate love, betrayal, and redemption in a community on the brink of transformation.
+                    A história das origens da Casa do Bárrio, seguindo as duas famílias fundadoras ao longo de várias gerações, e os dramas, intrigas e rivalidades que definiram a sua transformação.
                 </p>
                 <div>
                     <button class="play-button" onclick="playEpisode(1)">
-                        ▶ Play S1:E1
+                        ▶ Ver T1:E1
                     </button>
                     <button class="secondary-button" onclick="switchSection('trailer')">
-                        📽️ Watch Trailer
+                        📽️ Ver Trailer
                     </button>
                 </div>
             </div>
@@ -441,17 +441,16 @@
 
         <div class="show-sections">
             <div class="section-tabs">
-                <button class="section-tab active" onclick="switchSection('episodes')">Episodes</button>
-                <button class="section-tab" onclick="switchSection('trailer')">Trailer</button>
-                <button class="section-tab" onclick="switchSection('special')">Special Content</button>
-                <button class="section-tab" onclick="switchSection('cast')">Cast & Crew</button>
-                <button class="section-tab" onclick="switchSection('details')">Details</button>
+                <button class="section-tab active" onclick="switchSection('episodes')">Episódios</button>
+                <button class="section-tab" onclick="switchSection('content')">Trailer e Outro Conteúdo</button>
+                <button class="section-tab" onclick="switchSection('cast')">Elenco e Equipa</button>
+                <button class="section-tab" onclick="switchSection('details')">Detalhes</button>
             </div>
 
             <!-- Episodes Section -->
             <div id="episodes" class="section-content active">
                 <div class="season-selector">
-                    <h2>Season:</h2>
+                    <h2>Temporada:</h2>
                     <select onchange="changeSeason(this.value)">
                         <option value="1">Temporada 1 (2016)</option>
                     </select>
@@ -465,7 +464,7 @@
                             <div class="episode-number">EPISÓDIO 1</div>
                             <div class="episode-title">Os Fundadores</div>
                             <div class="episode-description">
-                                Three families arrive at Bárrio, each carrying secrets that will shape the neighborhood's destiny. As they settle in, unexpected connections begin to form.
+                                Jacinto regressa a Portugal após um longo exílio e, com a ajuda de Policarpo, cria as fundações para a Casa do Bárrio.
                             </div>
                             <div class="episode-duration">11 min</div>
                         </div>
@@ -478,7 +477,7 @@
                             <div class="episode-number">EPISÓDIO 2</div>
                             <div class="episode-title">O Arquiteto</div>
                             <div class="episode-description">
-                                As the families establish their roots, old rivalries resurface. Maria discovers a shocking truth about her father's past.
+                                O jovem e ambicioso arquiteto Sebastião sonha em como elevar o Bárrio a um novo patamar, mas guerras sucessivas impõem obstáculos.
                             </div>
                             <div class="episode-duration">12 min</div>
                         </div>
@@ -491,7 +490,7 @@
                             <div class="episode-number">EPISÓDIO 3</div>
                             <div class="episode-title">Os Jacintes</div>
                             <div class="episode-description">
-                                A construction project unearths more than just soil, revealing buried secrets that threaten to tear the community apart.
+                                Uma nova geração de descendentes de Jacinto herdam a Casa do Bárrio, mas não se entendem em relação ao seu propósito.
                             </div>
                             <div class="episode-duration">8 min</div>
                         </div>
@@ -504,7 +503,7 @@
                             <div class="episode-number">EPISÓDIO 4</div>
                             <div class="episode-title">Os Torres</div>
                             <div class="episode-description">
-                                Family loyalties are tested when João must choose between protecting his brother or telling the truth to the authorities.
+                                Artur Jacintes esforça-se por honrar ambos os fundadores da Casa, mas as rivalidades históricas das duas famílias ressurgem.
                             </div>
                             <div class="episode-duration">11 min</div>
                         </div>
@@ -517,7 +516,7 @@
                             <div class="episode-number">EPISÓDIO 5</div>
                             <div class="episode-title">Os Herdeiros</div>
                             <div class="episode-description">
-                                A violent storm mirrors the emotional turmoil as long-held secrets come to light during a neighborhood gathering.
+                                Os herdeiros de Jacinto e Policarpo tentam coexistir, mas séculos de rivalidade dificultam o processo.
                             </div>
                             <div class="episode-duration">20 min</div>
                         </div>
@@ -526,24 +525,9 @@
                 </div>
             </div>
 
-            <!-- Trailer Section -->
-            <div id="trailer" class="section-content">
-                <h2>Official Trailer</h2>
-                <div class="video-container">
-                    <video controls poster="origens/trailer-poster.jpg">
-                        <source src="origens/trailer.mp4" type="video/mp4">
-                        <!-- Add your trailer file here -->
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                <p style="color: #666; margin-top: 10px;">
-                    Note: Replace "trailer.mp4" with your actual trailer file path.
-                </p>
-            </div>
-
             <!-- Special Content Section -->
             <div id="special" class="section-content">
-                <h2>Special Content</h2>
+                <h2>Trailer e Outro Conteúdo</h2>
                 <div class="special-content-grid">
                     <!-- Behind the Scenes -->
                     <div class="special-card">
@@ -553,10 +537,7 @@
                             </video>
                         </div>
                         <div class="special-info">
-                            <div class="special-title">Behind the Scenes</div>
-                            <div class="special-description">
-                                Go behind the camera and discover how the world of Bárrio was brought to life. Features interviews with cast and crew.
-                            </div>
+                            <div class="special-title">Trailer - Temporada 1</div>
                         </div>
                     </div>
 
@@ -568,42 +549,13 @@
                             </video>
                         </div>
                         <div class="special-info">
-                            <div class="special-title">Cast Interviews</div>
+                            <div class="special-title">Bárrio 2000-2016</div>
                             <div class="special-description">
-                                The main cast shares their experiences filming the first season and their thoughts on their characters' journeys.
+                                A história da Casa do Bárrio continua no século XXI, habitada pela família Brinkmann-Torres.
                             </div>
                         </div>
                     </div>
 
-                    <!-- The Origins Mini-Documentary -->
-                    <div class="special-card">
-                        <div class="special-thumbnail">
-                            <video controls>
-                                <source src="origens/mini-doc.mp4" type="video/mp4">
-                            </video>
-                        </div>
-                        <div class="special-info">
-                            <div class="special-title">The Origins: Mini-Documentary</div>
-                            <div class="special-description">
-                                A 30-minute documentary exploring the real stories that inspired the series and the cultural significance of neighborhood communities.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Deleted Scenes -->
-                    <div class="special-card">
-                        <div class="special-thumbnail">
-                            <video controls>
-                                <source src="origens/deleted.mp4" type="video/mp4">
-                            </video>
-                        </div>
-                        <div class="special-info">
-                            <div class="special-title">Deleted Scenes</div>
-                            <div class="special-description">
-                                Scenes that didn't make the final cut but provide additional context and character development.
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <p style="color: #666; margin-top: 20px;">
                     Note: Add your special content video files in the src attributes above.
@@ -659,55 +611,31 @@
 
             <!-- Details Section -->
             <div id="details" class="section-content">
-                <h2>Series Details</h2>
+                <h2>Detalhes da Série</h2>
                 <div class="info-grid">
                     <div class="info-item">
-                        <div class="info-label">First Aired</div>
-                        <div class="info-value">March 15, 2016</div>
+                        <div class="info-label">Estreia</div>
+                        <div class="info-value">2016</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Network</div>
-                        <div class="info-value">Barrio Play Original</div>
+                        <div class="info-label">Estúdio</div>
+                        <div class="info-value">Barrio Productions</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Seasons</div>
-                        <div class="info-value">1 (Season 2 in production)</div>
+                        <div class="info-label">Temporadas</div>
+                        <div class="info-value">1</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Episodes</div>
-                        <div class="info-value">5 (Season 1)</div>
+                        <div class="info-label">Episódios</div>
+                        <div class="info-value">5</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Genre</div>
-                        <div class="info-value">Drama, Family, Mystery</div>
+                        <div class="info-label">Género</div>
+                        <div class="info-value">Drama, Intriga, História</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Language</div>
-                        <div class="info-value">Portuguese</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Country</div>
-                        <div class="info-value">Brazil</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Rating</div>
-                        <div class="info-value">TV-14</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Awards</div>
-                        <div class="info-value">Best Drama Series 2016</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Format</div>
-                        <div class="info-value">1080p HD</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Audio</div>
-                        <div class="info-value">5.1 Surround Sound</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Subtitles</div>
-                        <div class="info-value">English, Spanish, French</div>
+                        <div class="info-label">Idioma</div>
+                        <div class="info-value">Português</div>
                     </div>
                 </div>
             </div>
