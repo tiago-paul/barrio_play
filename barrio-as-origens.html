@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="googlebot" content="noindex, nofollow">
     <title>Bárrio - As Origens | Barrio Play</title>
     <link rel="stylesheet" href="style.css">
     <style>
         /* Additional styles for TV show page */
         .show-hero {
             background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.95) 100%),
-                        url('barrio-origens-poster.jpg') center/cover;
+                        url('origens/banner_origens_ai2.png') center/cover;
             min-height: 450px;
             display: flex;
             align-items: flex-end;
@@ -528,14 +530,14 @@
             <div id="trailer" class="section-content">
                 <h2>Official Trailer</h2>
                 <div class="video-container">
-                    <video controls poster="barrio-origens-trailer-poster.jpg">
-                        <source src="barrio-origens-trailer.mp4" type="video/mp4">
+                    <video controls poster="origens/trailer-poster.jpg">
+                        <source src="origens/trailer.mp4" type="video/mp4">
                         <!-- Add your trailer file here -->
                         Your browser does not support the video tag.
                     </video>
                 </div>
                 <p style="color: #666; margin-top: 10px;">
-                    Note: Replace "barrio-origens-trailer.mp4" with your actual trailer file path.
+                    Note: Replace "trailer.mp4" with your actual trailer file path.
                 </p>
             </div>
 
@@ -547,7 +549,7 @@
                     <div class="special-card">
                         <div class="special-thumbnail">
                             <video controls>
-                                <source src="barrio-origens-behind-scenes.mp4" type="video/mp4">
+                                <source src="origens/behind-scenes.mp4" type="video/mp4">
                             </video>
                         </div>
                         <div class="special-info">
@@ -562,7 +564,7 @@
                     <div class="special-card">
                         <div class="special-thumbnail">
                             <video controls>
-                                <source src="barrio-origens-interviews.mp4" type="video/mp4">
+                                <source src="origens/interviews.mp4" type="video/mp4">
                             </video>
                         </div>
                         <div class="special-info">
@@ -577,7 +579,7 @@
                     <div class="special-card">
                         <div class="special-thumbnail">
                             <video controls>
-                                <source src="barrio-origens-mini-doc.mp4" type="video/mp4">
+                                <source src="origens/mini-doc.mp4" type="video/mp4">
                             </video>
                         </div>
                         <div class="special-info">
@@ -592,7 +594,7 @@
                     <div class="special-card">
                         <div class="special-thumbnail">
                             <video controls>
-                                <source src="barrio-origens-deleted.mp4" type="video/mp4">
+                                <source src="origens/deleted.mp4" type="video/mp4">
                             </video>
                         </div>
                         <div class="special-info">
@@ -673,7 +675,7 @@
                     </div>
                     <div class="info-item">
                         <div class="info-label">Episodes</div>
-                        <div class="info-value">8 (Season 1)</div>
+                        <div class="info-value">5 (Season 1)</div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">Genre</div>
@@ -768,18 +770,15 @@
             
             // Episode titles
             const episodeTitles = {
-                1: 'Episode 1: O Começo',
-                2: 'Episode 2: Raízes Profundas',
-                3: 'Episode 3: Segredos Enterrados',
-                4: 'Episode 4: Laços de Sangue',
-                5: 'Episode 5: A Tempestade',
-                6: 'Episode 6: Encruzilhada',
-                7: 'Episode 7: Redenção',
-                8: 'Episode 8: Novo Amanhecer'
+                1: 'Episódio 1: Os Fundadores',
+                2: 'Episódio 2: O Arquiteto',
+                3: 'Episódio 3: Os Jacintes',
+                4: 'Episódio 4: Os Torres',
+                5: 'Episódio 5: Os Herdeiros'
             };
             
             title.textContent = episodeTitles[episodeNumber];
-            player.querySelector('source').src = `barrio-origens-s01e${String(episodeNumber).padStart(2, '0')}.mp4`;
+            player.querySelector('source').src = `origens/episodio${episodeNumber}.mp4`;
             player.load();
             
             modal.style.display = 'block';
