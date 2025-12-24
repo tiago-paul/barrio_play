@@ -432,7 +432,7 @@
                     <button class="play-button" onclick="playEpisode(1)">
                         ▶ Ver T1:E1
                     </button>
-                    <button class="secondary-button" onclick="switchSection('trailer')">
+                    <button class="secondary-button" onclick="playTrailer()">
                         📽️ Ver Trailer
                     </button>
                 </div>
@@ -532,7 +532,7 @@
                     <!-- Behind the Scenes -->
                     <div class="special-card">
                         <div class="special-thumbnail">
-                            <video controls>
+                            <video id="trailerVideo" controls>
                                 <source src="origens/behind-scenes.mp4" type="video/mp4">
                             </video>
                         </div>
@@ -786,6 +786,31 @@
                 closeEpisodeModal();
             }
         });
+
+        function playTrailer() {
+            // Switch to content section
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            const tabs = document.querySelectorAll('.section-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            document.getElementById('content').classList.add('active');
+            
+            // Find and activate the correct tab
+            tabs.forEach(tab => {
+                if (tab.textContent.includes('Trailer')) {
+                    tab.classList.add('active');
+                }
+            });
+            
+            // Play the trailer video
+            const trailer = document.getElementById('trailerVideo');
+            if (trailer) {
+                trailer.scrollIntoView({ behavior: 'smooth' });
+                trailer.play();
+            }
+        }
     </script>
 </body>
 </html>
