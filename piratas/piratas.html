@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>Samurai | Barrio Play</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .show-hero {
+            background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 100%),
+                        url('banner_samurai.png') center/cover;
+            min-height: 450px;
+            display: flex;
+            align-items: flex-end;
+            padding: 50px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            color: white;
+        }
+        .show-info-header { max-width: 900px; }
+        .show-title { font-size: 3.5em; margin-bottom: 15px; text-shadow: 3px 3px 6px rgba(0,0,0,0.7); font-weight: 700; }
+        .show-meta-info { display: flex; gap: 20px; font-size: 1.2em; margin-bottom: 25px; opacity: 0.95; }
+        .show-meta-info span { display: flex; align-items: center; gap: 5px; }
+        .show-description { font-size: 1.2em; line-height: 1.7; max-width: 800px; opacity: 0.95; margin-bottom: 25px; }
+        .show-sections { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 20px; padding: 35px; margin-bottom: 30px; }
+        .section-tabs { display: flex; gap: 15px; margin-bottom: 35px; border-bottom: 2px solid #e0e0e0; overflow-x: auto; }
+        .section-tab { background: none; border: none; padding: 15px 25px; font-size: 1.05em; cursor: pointer; color: #666; transition: all 0.3s ease; border-bottom: 3px solid transparent; margin-bottom: -2px; white-space: nowrap; }
+        .section-tab:hover { color: #764ba2; }
+        .section-tab.active { color: #764ba2; border-bottom-color: #764ba2; font-weight: 600; }
+        .section-content { display: none; }
+        .section-content.active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .special-content-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; margin-top: 25px; }
+        .special-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
+        .special-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+        .special-thumbnail { position: relative; padding-bottom: 56.25%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .special-thumbnail video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .special-info { padding: 20px; }
+        .special-title { font-size: 1.2em; font-weight: 600; margin-bottom: 10px; color: #333; }
+        .special-description { color: #666; line-height: 1.5; }
+
+        .back-button { display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; background: #764ba2; color: white; text-decoration: none; border-radius: 25px; margin-bottom: 20px; transition: all 0.3s ease; }
+        .back-button:hover { background: #5a3785; transform: translateX(-5px); }
+        .play-button { display: inline-flex; align-items: center; gap: 10px; padding: 15px 35px; background: #ff4444; color: white; border: none; border-radius: 30px; font-size: 1.15em; cursor: pointer; transition: all 0.3s ease; margin-right: 15px; }
+        .play-button:hover { background: #ff6666; transform: scale(1.05); }
+        .secondary-button { display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px; background: transparent; color: white; border: 2px solid white; border-radius: 30px; font-size: 1.1em; cursor: pointer; transition: all 0.3s ease; }
+        .secondary-button:hover { background: rgba(255,255,255,0.2); transform: scale(1.05); }
+
+        .cast-section-title { font-size: 1.3em; font-weight: 600; color: #764ba2; margin: 25px 0 15px 0; padding-bottom: 10px; border-bottom: 2px solid #e0e0e0; }
+        .cast-section-title:first-of-type { margin-top: 0; }
+        .cast-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 25px; }
+        .cast-card { text-align: center; }
+        .cast-photo { width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3em; color: white; margin-bottom: 10px; }
+        .cast-name { font-weight: 600; margin-bottom: 5px; color: #333; }
+        .cast-role { color: #666; font-size: 0.9em; }
+
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 25px; }
+        .info-item { padding: 15px; background: #f5f5f5; border-radius: 10px; }
+        .info-label { font-weight: 600; color: #764ba2; margin-bottom: 5px; }
+        .info-value { color: #333; }
+
+        /* Movie player section */
+        .movie-player-section { text-align: center; padding: 20px 0; }
+        .movie-player-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; border-radius: 12px; margin-bottom: 20px; }
+        .movie-player-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .movie-synopsis { max-width: 800px; margin: 0 auto; text-align: left; }
+        .movie-synopsis h3 { color: #764ba2; margin-bottom: 15px; }
+        .movie-synopsis p { color: #666; line-height: 1.8; }
+
+        @media (max-width: 768px) {
+            .show-hero { padding: 30px 20px; }
+            .show-title { font-size: 2.5em; }
+            .special-content-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-button">← Menú Principal</a>
+
+        <div class="show-hero">
+            <div class="show-info-header">
+                <h1 class="show-title">Samurai</h1>
+                <div class="show-meta-info">
+                    <span>2018</span>
+                    <span>•</span>
+                    <span>Filme</span>
+                    <span>•</span>
+                    <span>45 min</span>
+                </div>
+                <p class="show-description">
+                    Um guerreiro solitário enfrenta o seu passado enquanto luta para proteger uma aldeia indefesa contra um senhor da guerra implacável.
+                </p>
+                <div>
+                    <button class="play-button" onclick="switchSection('movie')">▶ Ver Filme</button>
+                    <button class="secondary-button" onclick="playTrailer()">📽️ Ver Trailer</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="show-sections">
+            <div class="section-tabs">
+                <button class="section-tab active" onclick="switchSection('movie')">Filme</button>
+                <button class="section-tab" onclick="switchSection('content')">Trailer e Mais Conteúdo</button>
+                <button class="section-tab" onclick="switchSection('cast')">Elenco e Equipa</button>
+                <button class="section-tab" onclick="switchSection('details')">Detalhes</button>
+            </div>
+
+            <!-- Movie Section -->
+            <div id="movie" class="section-content active">
+                <div class="movie-player-section">
+                    <div class="movie-player-container">
+                        <video id="moviePlayer" controls>
+                            <source src="samurai/samurai.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Special Content Section -->
+            <div id="content" class="section-content">
+                <h2>Trailer e Mais Conteúdo</h2>
+                <div class="special-content-grid">
+                    <div class="special-card">
+                        <div class="special-thumbnail">
+                            <video id="trailerVideo" controls>
+                                <source src="samurai/trailer.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="special-info">
+                            <div class="special-title">Trailer Oficial</div>
+                        </div>
+                    </div>
+                    <div class="special-card">
+                        <div class="special-thumbnail">
+                            <video controls>
+                                <source src="samurai/making-of.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="special-info">
+                            <div class="special-title">Making Of</div>
+                            <div class="special-description">Os bastidores da produção do filme.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cast Section -->
+            <div id="cast" class="section-content">
+                <h2 class="cast-section-title">Elenco</h2>
+                <div class="cast-grid">
+                    <div class="cast-card">
+                        <div class="cast-photo">👤</div>
+                        <div class="cast-name">Actor 1</div>
+                        <div class="cast-role">Takeshi</div>
+                    </div>
+                    <div class="cast-card">
+                        <div class="cast-photo">👤</div>
+                        <div class="cast-name">Actor 2</div>
+                        <div class="cast-role">Senhor da Guerra</div>
+                    </div>
+                    <div class="cast-card">
+                        <div class="cast-photo">👤</div>
+                        <div class="cast-name">Actor 3</div>
+                        <div class="cast-role">Ancião da Aldeia</div>
+                    </div>
+                    <div class="cast-card">
+                        <div class="cast-photo">👤</div>
+                        <div class="cast-name">Actor 4</div>
+                        <div class="cast-role">Yuki</div>
+                    </div>
+                </div>
+
+                <h2 class="cast-section-title">Equipa</h2>
+                <div class="cast-grid">
+                    <div class="cast-card">
+                        <div class="cast-photo">👤</div>
+                        <div class="cast-name">Nome</div>
+                        <div class="cast-role">Realizador</div>
+                    </div>
+                    <div class="cast-card">
+                        <div class="cast-photo">👤</div>
+                        <div class="cast-name">Nome</div>
+                        <div class="cast-role">Produtor</div>
+                    </div>
+                    <div class="cast-card">
+                        <div class="cast-photo">👤</div>
+                        <div class="cast-name">Nome</div>
+                        <div class="cast-role">Argumentista</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Details Section -->
+            <div id="details" class="section-content">
+                <h2>Detalhes do Filme</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Estreia</div>
+                        <div class="info-value">2018</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Estúdio</div>
+                        <div class="info-value">Barrio Productions</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Duração</div>
+                        <div class="info-value">45 minutos</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Género</div>
+                        <div class="info-value">Ação, Drama, História</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Idioma</div>
+                        <div class="info-value">Português</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Classificação</div>
+                        <div class="info-value">M/12</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Barrio Play. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        function switchSection(sectionName) {
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(section => section.classList.remove('active'));
+
+            const tabs = document.querySelectorAll('.section-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            document.getElementById(sectionName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function playTrailer() {
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(section => section.classList.remove('active'));
+
+            const tabs = document.querySelectorAll('.section-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            document.getElementById('content').classList.add('active');
+
+            tabs.forEach(tab => {
+                if (tab.textContent.includes('Trailer')) {
+                    tab.classList.add('active');
+                }
+            });
+
+            const trailer = document.getElementById('trailerVideo');
+            if (trailer) {
+                trailer.scrollIntoView({ behavior: 'smooth' });
+                trailer.play();
+            }
+        }
+    </script>
+</body>
+</html>
